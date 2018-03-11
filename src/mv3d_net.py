@@ -123,8 +123,7 @@ def top_feature_net_r(input, anchors, inds_inside, num_bases):
         # up     = block
         # kernel_size = config.cfg.TOP_CONV_KERNEL_SIZE
         top_anchors_stride = 2
-        block = conv2d_bn_relu(block, num_kernels=128, kernel_size=(1, 1), stride=[1, 1, 1, 1], padding='SAME',
-                               name='2')
+        block = conv2d_bn_relu(block, num_kernels=128, kernel_size=(1, 1), stride=[1, 1, 1, 1], padding='SAME', name='2')
         scores = conv2d(block, num_kernels=2 * num_bases, kernel_size=(1, 1), stride=[1, 1, 1, 1], padding='SAME',name='score')
         probs = tf.nn.softmax(tf.reshape(scores, [-1, 2]), name='prob')
         deltas = conv2d(block, num_kernels=4 * num_bases, kernel_size=(1, 1), stride=[1, 1, 1, 1], padding='SAME',name='delta')

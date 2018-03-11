@@ -308,9 +308,21 @@ class raw:
         if self.frame_range:
             velo_files = [velo_files[i] for i in self.frame_range]
 
-        print('Found ' + str(len(velo_files)) + ' Velodyne scans...')
+        print('Found ' + str(len(velo_files)) + ' Velodyne scans in ' + velo_path)
 
         # Read the Velodyne scans. Each point is [x,y,z,reflectance]
         self.velo = utils.load_velo_scans(velo_files)
 
         print('done.')
+
+    def save_velo(self):
+        lidar = self.velo[0]
+        np.save('velo_0.npy', lidar)
+
+if __name__ == '__main__':
+    base_path = '/data1/kitti/'
+    date = '2011_09_26'
+    drive = '0001'
+    r = raw(base_path, date, drive)
+    r.load_velo()
+    r.save_velo()

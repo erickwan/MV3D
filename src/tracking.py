@@ -38,9 +38,8 @@ def pred_and_save(tracklet_pred_dir, dataset,frame_offset=0, log_tag=None, weigh
     # dataset.size - 1 for in dataset.get_shape(), a frame is used. So it'll omit first frame for prediction,
     # fix this if has more time
     for i in range(dataset.size-1 if fast_test == False else frame_offset + 1):
-
         rgb, top, front, _, _, frame_id = dataset.load()
-
+        
         # handling multiple bags.
         current_bag = frame_id.split('/')[1]
         current_frame_num = int(frame_id.split('/')[2])
@@ -142,7 +141,7 @@ if __name__ == '__main__':
 
     # Set true if you want score after export predicted tracklet xml
     # set false if you just want to export tracklet xml
-    if_score =False
+    if_score = False
 
     if config.cfg.DATA_SETS_TYPE == 'didi2':
         assert cfg.OBJ_TYPE == 'car' or cfg.OBJ_TYPE == 'ped'
@@ -180,22 +179,62 @@ if __name__ == '__main__':
         #     gt_tracklet_file = os.path.join(cfg.RAW_DATA_SETS_DIR, car, data, 'tracklet_labels.xml')
 
     elif config.cfg.DATA_SETS_TYPE == 'kitti':
-        pass #todo
+        # pass #todo
         # if_score = False
-        # car = '2011_09_26'
-        # data = '0013'
-        # dataset = {
-        #     car: [data]
-        # }
+        car = '2011_09_26'
+        data = '0001'
+        dataset = {
+            car: [data]
+        }
+        test_bags = [
+            
+            '2011_09_26/2011_09_26_drive_0001_sync', # for tracking
+            '2011_09_26/2011_09_26_drive_0002_sync',
+            '2011_09_26/2011_09_26_drive_0005_sync',
+            '2011_09_26/2011_09_26_drive_0011_sync',
+            '2011_09_26/2011_09_26_drive_0013_sync',
+            '2011_09_26/2011_09_26_drive_0014_sync',
+            '2011_09_26/2011_09_26_drive_0015_sync',
+            '2011_09_26/2011_09_26_drive_0017_sync',
+            '2011_09_26/2011_09_26_drive_0018_sync',
+            '2011_09_26/2011_09_26_drive_0019_sync',
+            '2011_09_26/2011_09_26_drive_0020_sync',
+            '2011_09_26/2011_09_26_drive_0022_sync',
+            '2011_09_26/2011_09_26_drive_0023_sync',
+            '2011_09_26/2011_09_26_drive_0027_sync',
+            '2011_09_26/2011_09_26_drive_0028_sync',
+            '2011_09_26/2011_09_26_drive_0029_sync',
+            '2011_09_26/2011_09_26_drive_0032_sync',
+            '2011_09_26/2011_09_26_drive_0035_sync',
+            '2011_09_26/2011_09_26_drive_0036_sync',
+            '2011_09_26/2011_09_26_drive_0039_sync',
+            '2011_09_26/2011_09_26_drive_0046_sync',
+            '2011_09_26/2011_09_26_drive_0048_sync',
+            '2011_09_26/2011_09_26_drive_0051_sync',
+            '2011_09_26/2011_09_26_drive_0052_sync',
+            '2011_09_26/2011_09_26_drive_0056_sync',
+            '2011_09_26/2011_09_26_drive_0057_sync',
+            '2011_09_26/2011_09_26_drive_0059_sync',
+            '2011_09_26/2011_09_26_drive_0060_sync',
+            '2011_09_26/2011_09_26_drive_0061_sync',
+            '2011_09_26/2011_09_26_drive_0064_sync',
+            '2011_09_26/2011_09_26_drive_0070_sync',
+            '2011_09_26/2011_09_26_drive_0079_sync',
+            '2011_09_26/2011_09_26_drive_0084_sync',
+            '2011_09_26/2011_09_26_drive_0086_sync',
+            '2011_09_26/2011_09_26_drive_0087_sync',
+            '2011_09_26/2011_09_26_drive_0091_sync',
+            '2011_09_26/2011_09_26_drive_0119_sync',
+        ]
         #
         # # compare newly generated tracklet_label_pred.xml with tracklet_labels_gt.xml. Change the path accordingly to
         # #  fits you needs.
-        # gt_tracklet_file = os.path.join(cfg.RAW_DATA_SETS_DIR, car, car + '_drive_' + data + '_sync',
-        #                                 'tracklet_labels.xml')
+        # gt_tracklet_file = os.path.join(cfg.RAW_DATA_SETS_DIR, car, car + '_drive_' + data + '_sync', 'tracklet_labels.xml')
 
 
     ## detecting
     test_tags = get_test_tags(test_bags)
+    
     with BatchLoading(test_tags, require_shuffle=False, is_testset=True,
                       n_skip_frames=0 if fast_test else n_skip_frames) as dataset_loader:
 
@@ -205,8 +244,10 @@ if __name__ == '__main__':
         pred_file = pred_and_save(tracklet_pred_dir, dataset_loader,
                                   frame_offset=0, log_tag=tag, weights_tag=weights_tag)
 
+        """
         if if_score:
             tracklet_score(pred_file=pred_file, gt_file=gt_tracklet_file, output_dir=tracklet_pred_dir)
             print("scores are save under {} directory.".format(tracklet_pred_dir))
+        """
 
         print("Completed")

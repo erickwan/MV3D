@@ -1,4 +1,4 @@
-#! /usr/bin/python
+
 """ Udacity Self-Driving Car Challenge Bag Processing
 """
 
@@ -10,6 +10,7 @@ from __future__ import print_function
 # import numpy as np
 # import pandas as pd
 from tracklets.generate_tracklet import *
+
 import os
 import sys
 from config import cfg
@@ -63,7 +64,7 @@ class Tracklet_saver():
 if __name__ == '__main__':
     #a test case
     os.makedirs('./test_output/', exist_ok=True)
-    a = Tracklet_saver('./test_output/', 'ped_test', exist_ok=True)
+    a = Tracklet_saver('./test_output/', 'car_test', exist_ok=True)
     # The size is for obstacle car, the order for size is [height, width, length]
     rate = 1.0
     size = [1.7, 0.8, 0.8]
@@ -76,7 +77,7 @@ if __name__ == '__main__':
     # for i in range(324,647):
     #     a.add_tracklet(i, size, transition, rotation)
 
-    objects = read_objects('./input/ped_test.xml')
+    objects = read_objects('./input/car_test.xml')
 
 
 

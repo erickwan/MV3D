@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h> 
 #include <string.h>
@@ -9,7 +8,6 @@
 #include <iomanip>  
 #include <vector>
 #include <math.h>
-#include <iostream>
 #include <cstdlib>
 #include <iostream>
 #include <fstream>    
@@ -27,14 +25,19 @@ extern "C"
 		float intensity;
 	} PointT;
 
-	void createTopMaps(const void * raw_data, int num, const void * top_data, float x_MIN, float x_MAX, float y_MIN, float y_MAX, float z_MIN, float z_MAX, float x_DIVISION, float y_DIVISION, float z_DIVISION, int X_SIZE, int Y_SIZE, int Z_SIZE)
+	void createTopMaps(const void * raw_data, int num, const void * top_data,
+			   float x_MIN, float x_MAX,
+			   float y_MIN, float y_MAX,
+			   float z_MIN, float z_MAX,
+			   float x_DIVISION, float y_DIVISION, float z_DIVISION,
+			   int X_SIZE, int Y_SIZE, int Z_SIZE)
     {	    
 		float * raw_cube = (float *) raw_data;
 		float * top_cube = (float *) top_data;
 //		std::cout<<X_SIZE<<","<<Y_SIZE<<","<<Z_SIZE<<std::endl;
 
 		//int32_t num = 123586;
-	    float *px = raw_cube+0;
+		float *px = raw_cube+0;
 		float *py = raw_cube+1;
 		float *pz = raw_cube+2;
 		float *pr = raw_cube+3;
@@ -99,10 +102,10 @@ extern "C"
 
 		for (int32_t i=0; i<num; i++) {
 			PointT point;
-		    point.x = *px;
-		    point.y = *py;
-		    point.z = *pz;
-			point.intensity = (*pr);// * 255;	//TODO : check if original Kitti data normalized between 0 and 1 ?
+			point.x = *px;
+			point.y = *py;
+			point.z = *pz;
+			point.intensity = (*pr) * 255;	// Kitti data normalized between 0 and 1
 			
 			X = (int)((point.x-x_MIN)/x_DIVISION);	// qxs in Python version  
 			Y = (int)((point.y-y_MIN)/y_DIVISION);	// qys in Python version  
@@ -163,13 +166,13 @@ extern "C"
 
 		// normalization
 		for (unsigned int i=0; i < density_cloud.size(); i++){
-//			float val = log10(density_cloud.at(i).intensity+1)/log10(64);
-			float val = log(density_cloud.at(i).intensity+1)/log(32);	//In DiDi, we use velodyne 32 beam
+			float val = log(density_cloud.at(i).intensity+1)/log(64);       // Kitti
+			//float val = log(density_cloud.at(i).intensity+1)/log(32);	//In DiDi, we use velodyne 32 beam
 
 			if(val < 1)	
-            	density_cloud.at(i).intensity = val;
-            else
-            	density_cloud.at(i).intensity = 1;
+			  density_cloud.at(i).intensity = val;
+			else
+			  density_cloud.at(i).intensity = 1;
 		}
 
 		int top_cube_size = X_SIZE * Y_SIZE * (Z_SIZE + 2);

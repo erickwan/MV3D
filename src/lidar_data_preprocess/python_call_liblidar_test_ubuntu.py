@@ -6,7 +6,7 @@ liblidar = CDLL('./liblidar.so')	#LINUX
 
 #CHANGE HERE !!! -----------------
 #Change lidar data source dir, lidar top view image saved destination dir, lidar front view image saved destination dir 
-lidar_data_src_dir = "./raw/kitti/2011_09_26/2011_09_26_drive_0001_sync/velodyne_points/data/"
+lidar_data_src_dir = "/data1/kitti/2011_09_26/2011_09_26_drive_0001_sync/velodyne_points/data/"
 top_image_dst_dir = "./preprocessed/kitti/top_image/"
 front_image_dst_dir = "./preprocessed/kitti/front_image/"
 delay = "0" #ms,  DISPLAY DELAY TIME

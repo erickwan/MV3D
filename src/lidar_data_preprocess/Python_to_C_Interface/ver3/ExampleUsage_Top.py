@@ -90,15 +90,15 @@ TOP_Y_DIVISION = 0.1
 TOP_Z_DIVISION = 0.4
 
 # setting for DiDi from xuefung
-TOP_X_MIN =-45   #-15
-TOP_X_MAX =45	#45
-TOP_Y_MIN =-10  #-30
-TOP_Y_MAX =10	#30
-TOP_Z_MIN =-3
-TOP_Z_MAX =1.0
-TOP_X_DIVISION = 0.2 #0.2
-TOP_Y_DIVISION = 0.2 #0.2
-TOP_Z_DIVISION = 1 #0.5
+#TOP_X_MIN =-45   #-15
+#TOP_X_MAX =45	#45
+#TOP_Y_MIN =-10  #-30
+#TOP_Y_MAX =10	#30
+#TOP_Z_MIN =-3
+#TOP_Z_MAX =1.0
+#TOP_X_DIVISION = 0.2 #0.2
+#TOP_Y_DIVISION = 0.2 #0.2
+#TOP_Z_DIVISION = 1 #0.5
 
 # setting for DiDi from xuefung  (weird slit appears in original Python version)
 #TOP_X_MIN =-45  
@@ -124,8 +124,8 @@ top_paras = (TOP_X_MIN, TOP_X_MAX, TOP_Y_MIN, TOP_Y_MAX, TOP_Z_MIN, TOP_Z_MAX, T
 #------------------- 2. SET SOURCE RAW DATA TO BE PROCESSED --------------------
 # load lidar raw data  (presumed raw data dimension : num x 4)    
 #raw = np.load("raw_kitti_2011_09_26_0005_0000000004.npy")
-raw = np.load("raw_0.npy")
-raw = np.load("./lidar_dumps/00000.npy")
+raw = np.load("velo_0.npy")
+#raw = np.load("./lidar_dumps/00000.npy")
 num = raw.shape[0]  # DON'T CHANGE THIS !
 # num : number of points in one lidar frame
 # 4 : total channels of single point (x, y, z, intensity)
@@ -169,9 +169,10 @@ python_top=lidar_to_top(raw)
 map_num = len(python_top[0][0])
 plt.figure('Python version - top view')
 for i in range(map_num):
-	plt.subplot(1, map_num, i+1)
-	plt.imshow(python_top[:,:,i])
-	plt.gray()
+    plt.subplot(1, map_num, i+1)
+    plt.imshow(python_top[:,:,i])
+    plt.gray()
+
 plt.show()
 
 for i in range(map_num-2):

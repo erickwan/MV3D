@@ -599,7 +599,8 @@ class Trainer(MV3D):
                 self.clean_weights(train_targets)
 
             self.load_weights(pre_trained_weights)
-            if continue_train: self.load_progress()
+            if continue_train:
+                self.load_progress()
 
 
     def anchors_details(self):

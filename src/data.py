@@ -230,6 +230,9 @@ def draw_top_image(lidar_top):
 
 
 def clidar_to_top(lidar):
+    import pdb
+    pdb.set_trace()
+    
     # Calculate map size and pack parameters for top view and front view map (DON'T CHANGE THIS !)
     Xn = int((TOP_X_MAX - TOP_X_MIN) / TOP_X_DIVISION)
     Yn = int((TOP_Y_MAX - TOP_Y_MIN) / TOP_Y_DIVISION)
@@ -606,7 +609,7 @@ def data_in_single_driver(raw_dir, date, drive, frames_index=None):
 
 
         ############# convert   ###########################
-        save_preprocess_dir = cfg.PREPROCESSING_DATA_SETS_DIR
+        save_preprocess_dir = cfg.PREPROCESSED_DATA_SETS_DIR
 
         if 1:  ## rgb images --------------------
             proprecess_rgb(save_preprocess_dir, dataset, date, drive, frames_index, overwrite=False)

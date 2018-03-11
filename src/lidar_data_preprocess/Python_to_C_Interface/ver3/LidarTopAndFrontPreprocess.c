@@ -38,7 +38,7 @@ extern "C"
 		int FV_CENTER_R = R_SIZE/2;
 
 		//int32_t num = 123586;
-	    float *px = raw_cube+0;
+		float *px = raw_cube+0;
 		float *py = raw_cube+1;
 		float *pz = raw_cube+2;
 		float *pr = raw_cube+3;
@@ -112,10 +112,10 @@ extern "C"
 
 		for (int32_t i=0; i<num; i++) {
 			PointT point;
-		    point.x = *px;
-		    point.y = *py;
-		    point.z = *pz;
-			point.intensity = (*pr);// * 255;	//TODO : check if original Kitti data normalized between 0 and 1 ?
+			point.x = *px;
+			point.y = *py;
+			point.z = *pz;
+			point.intensity = (*pr) * 255;	// Kitti data normalized between 0 and 1
 		
 			//X = (int)((point.x-x_MIN)/x_DIVISION);
 			//Y = (int)((point.y-y_MIN)/y_DIVISION);

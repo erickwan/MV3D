@@ -1,3 +1,4 @@
+set -x
 sudo chmod 777 ./ -R
 cd ./src/
 cd ./net/lib/

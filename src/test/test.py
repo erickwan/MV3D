@@ -8,7 +8,7 @@ from net.common import MATRIX_Mt,MATRIX_Kt
 import net.processing.boxes3d as box3d
 
 
-data_dir='/Users/zengxuefeng/Development/MV3D/src/test/'
+data_dir='/home/ekwan/MV3D/src/test/'
 
 def box3d_to_rgb_projections(boxes3d, Mt=None, Kt=None):
 

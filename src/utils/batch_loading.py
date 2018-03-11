@@ -19,7 +19,7 @@ from kitti_data.pykitti.tracklet import parseXML, TRUNC_IN_IMAGE, TRUNC_TRUNCATE
 from config import cfg
 import data
 import net.utility.draw as draw
-from raw_data import *
+from raw_data import Lidar, Image, Tracklet
 from utils.training_validation_data_splitter import TrainingValDataSplitter
 import pickle
 import array
@@ -58,8 +58,8 @@ class BatchLoading2:
         self.raw_img = Image()
         self.raw_tracklet = Tracklet()
         self.raw_lidar = Lidar()
-
-        # skit some frames
+        
+        # skip some frames
         self.tags = [tag for i, tag in enumerate(tags) if i % (n_skip_frames + 1) == 0]
         self.is_flip = is_flip
 
@@ -96,6 +96,8 @@ class BatchLoading2:
         if self.require_log: print('exit lodaer_processing')
 
     def keep_gt_inside_range(self, train_gt_labels, train_gt_boxes3d):
+        import pdb
+        pdb.set_trace()
         train_gt_labels = np.array(train_gt_labels, dtype=np.int32)
         train_gt_boxes3d = np.array(train_gt_boxes3d, dtype=np.float32)
         if train_gt_labels.shape[0] == 0:
@@ -127,6 +129,8 @@ class BatchLoading2:
         return obstacles, rgb, lidar
 
     def preprocess_one_frame(self, rgb, lidar, obstacles):
+        import pdb
+        pdb.set_trace()
         rgb = self.preprocess.rgb(rgb)
         top = self.preprocess.lidar_to_top(lidar)
 
@@ -154,6 +158,7 @@ class BatchLoading2:
     def data_preprocessed(self):
         # only feed in frames with ground truth labels and bboxes during training, or the training nets will break.
         skip_frames = True
+
         while skip_frames:
             fronts = []
             frame_tag = self.tags[self.tag_index]

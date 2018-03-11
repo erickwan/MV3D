@@ -11,6 +11,7 @@ def get_test_tags(bags):
     tags_all = raw_img.get_tags()
     # get only tes
     all_tags = []
+
     for bag in bags:
         # get all tags start from bag string.
         r = re.compile('^'+bag)
@@ -55,6 +56,7 @@ class TrainingValDataSplitter:
         r = re.compile('^'+bag)
         tracklet_tag_list = filter(r.match, self.raw_tracklet_tag_list)
         tracklet_num = len(list(tracklet_tag_list))
+
         if not img_num == lidar_num == tracklet_num:
             return False
         return True
@@ -92,10 +94,15 @@ class TrainingValDataSplitter:
             if not if_same:
                 problematic_bags.append(bag)
 
+        """
         if len(problematic_bags) != 0:
             raise ValueError('Number of images, lidar and tracklet of these bags are not the same ',
                              problematic_bags)
+        """
 
+        for x in problematic_bags:
+            self.bags.remove(x)
+        
         # shuffle bags
         all_tags = []
         for bag in self.bags:
